@@ -2,7 +2,7 @@
 // Using Math.round() will give you a non-uniform distribution!
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -22,14 +22,15 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), this.x * dt, this.y);
+    this.x = (this.x + 10) * dt;
+    // console.log("here");
     // Collision detection
-    if((this.x == player.x) && (this.y == player.y)) {
-    	this.x = 0;
-    	this.y = getRandomInt(0,300);
-    	player.x = getRandomInt(0,400);
-		player.y = 400;
-    }
+  //   if((this.x == player.x) && (this.y == player.y)) {
+  //   	this.x = 0;
+  //   	this.y = getRandomInt(0,300);
+  //   	player.x = getRandomInt(0,400);
+		// player.y = 400;
+  //   }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -47,7 +48,6 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.render = function() {
