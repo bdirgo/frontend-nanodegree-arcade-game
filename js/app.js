@@ -1,3 +1,9 @@
+// Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -6,6 +12,8 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = 0;
+    this.y = getRandomInt(0,100);
 };
 
 // Update the enemy's position, required method for game
@@ -14,7 +22,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), (this.x + 1) * dt, this.y);
+    ctx.drawImage(Resources.get(this.sprite), (this.x + 10) * dt, this.y);
 };
 
 // Draw the enemy on the screen, required method for game
