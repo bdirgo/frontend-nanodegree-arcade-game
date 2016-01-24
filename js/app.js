@@ -4,6 +4,8 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+var enemySpeed = 250;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -12,8 +14,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
-    this.y = getRandomInt(0,300);
+    this.x = -5;
+    this.y = getRandomInt(100,200);
+    this.speed = enemySpeed;
 };
 
 // Update the enemy's position, required method for game
@@ -22,15 +25,25 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = (this.x + 10) * dt;
-    // console.log("here");
+    if (this.x > 450) {
+    	this.x = -5;
+    	this.speed = enemySpeed;
+    } else {
+    	this.x += this.speed * dt;
+    }
+
     // Collision detection
-  //   if((this.x == player.x) && (this.y == player.y)) {
-  //   	this.x = 0;
-  //   	this.y = getRandomInt(0,300);
-  //   	player.x = getRandomInt(0,400);
-		// player.y = 400;
-  //   }
+    if(player.x - this.x < 15 && player.y - this.y < 15 && player.x - this.x > 0 && player.y - this.y > 0) {
+    	console.log((player.x - this.x));
+    	console.log(this.y);
+    	console.log(player.y);
+    	console.log(this.x);
+    	console.log(player.x);
+    	this.x = -5;
+    	this.y = getRandomInt(0,300);
+    	player.x = getRandomInt(0,400);
+		player.y = 400;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -80,6 +93,7 @@ Player.prototype.handleInput = function(allowedKeys) {
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var allEnemies = [enemy1,enemy2];
+// console.dir(enemy1);
 
 var player = new Player();
 
