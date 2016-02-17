@@ -1,7 +1,25 @@
 // Returns a random integer between min (included) and max (excluded)
 // Using Math.round() will give you a non-uniform distribution!
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+	return Math.floor(Math.random() * (max - min)) + min;
+};
+
+function getPlayerSpawnPoint() {
+	var position = [];
+	var x = getRandomInt(0,5) * 100;
+	var y = 400;
+	position.push(x);
+	position.push(y);
+	return position;
+};
+
+function getEnemySpawnPoint() {
+	var position = [];
+	var y = 300 - (85 * getRandomInt(1,3));
+	var x = 0;
+	position.push(x);
+	position.push(y);
+	return position;
 };
 
 var enemySpeed = 250;
@@ -14,8 +32,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -5;
-    this.y = getRandomInt(100,200);
+    var position = getEnemySpawnPoint();
+    this.x = position[0];
+    this.y = position[1];
     this.speed = enemySpeed;
 };
 
@@ -34,15 +53,12 @@ Enemy.prototype.update = function(dt) {
 
     // Collision detection
     if(player.x - this.x < 15 && player.y - this.y < 15 && player.x - this.x > 0 && player.y - this.y > 0) {
-    	console.log((player.x - this.x));
-    	console.log(this.y);
-    	console.log(player.y);
-    	console.log(this.x);
-    	console.log(player.x);
-    	this.x = -5;
-    	this.y = getRandomInt(0,300);
-    	player.x = getRandomInt(0,400);
-		player.y = 400;
+    	var enemyPosition = getEnemySpawnPoint();
+    	this.x = enemyPosition[0];
+    	this.y = enemyPosition[1];
+    	var playerPosition = getPlayerSpawnPoint();
+    	player.x = playerPosition[0];
+		player.y = playerPosition[1];
     }
 };
 
@@ -56,11 +72,19 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
 	this.sprite = 'images/char-boy.png';
-    this.x = getRandomInt(0,400);
-	this.y = 400;
+	var position = getPlayerSpawnPoint();
+    this.x = position[0];
+	this.y = position[1];
 };
 
 Player.prototype.update = function() {
+	// TODO: Water collision detection
+    if(player.y < 15)
+    {
+ 	  	var position = getPlayerSpawnPoint();
+    	this.x = position[0];
+		this.y = position[1];
+    }
 };
 
 Player.prototype.render = function() {
@@ -70,19 +94,19 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(allowedKeys) {
 	if (allowedKeys == 'left') {
 		if (this.x > 10) {
-    		this.x  = this.x - 30;
+    		this.x  = this.x - 100;
 		};
 	} else if (allowedKeys == 'right') {
 		if (this.x < 400) {
-    		this.x = this.x + 30;
+    		this.x = this.x + 100;
 		};
 	} else if (allowedKeys == 'up') {
 		if (this.y > 10) {
-    		this.y = this.y - 30;
+    		this.y = this.y - 85;
 		};
 	} else if (allowedKeys == 'down') {
 		if (this.y < 400) {
-    		this.y = this.y + 30;
+    		this.y = this.y + 85;
 		};
 	};
 };

@@ -1,6 +1,6 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+Either download the files and run index.html in a browser, or navigate to bdirgo.github.io/frontend-nanodegree-arcade-game
 
-for self-checking their submission.
+Use the arrow keys to move your character, avoid the bugs that are walking along the stone blocks.
