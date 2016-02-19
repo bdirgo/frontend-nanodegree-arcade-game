@@ -22,6 +22,18 @@ function getEnemySpawnPoint() {
 	return position;
 };
 
+// Log function used for Debugging
+function logPlayerPos() {
+	console.log("Player X: ",player.x);
+	console.log("Player Y: ",player.y);
+};
+
+// Log function used for Debugging
+function logEnemy1Pos() {
+	console.log("Enemy 1 X: ", enemy1.x);
+	console.log("Enemy 1 Y: ", enemy1.y);
+};
+
 var enemySpeed = 250;
 
 // Enemies our player must avoid
@@ -44,15 +56,15 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    if (this.x > 450) {
-    	this.x = -5;
+    if (this.x > 455) {
+    	this.x = -50;
     	this.speed = enemySpeed;
     } else {
     	this.x += this.speed * dt;
     }
-
+    //
     // Collision detection
-    if(player.x - this.x < 15 && player.y - this.y < 15 && player.x - this.x > 0 && player.y - this.y > 0) {
+    if(player.x - this.x < 20 && player.y - this.y < 20 && player.x - this.x > 0 && player.y - this.y > 0) {
     	var enemyPosition = getEnemySpawnPoint();
     	this.x = enemyPosition[0];
     	this.y = enemyPosition[1];
@@ -78,13 +90,13 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-	// TODO: Water collision detection
-    if(player.y < 15)
-    {
- 	  	var position = getPlayerSpawnPoint();
-    	this.x = position[0];
-		this.y = position[1];
-    }
+	// // TODO: Water collision detection
+ //    if(player.y < 15)
+ //    {
+ // 	  	var position = getPlayerSpawnPoint();
+ //    	this.x = position[0];
+	// 	this.y = position[1];
+ //    }
 };
 
 Player.prototype.render = function() {
@@ -101,8 +113,12 @@ Player.prototype.handleInput = function(allowedKeys) {
     		this.x = this.x + 100;
 		};
 	} else if (allowedKeys == 'up') {
-		if (this.y > 10) {
+		if (this.y > 90) {
     		this.y = this.y - 85;
+		} else if (this.y > 0 && this.y < 90) {
+			var position = getPlayerSpawnPoint();
+    		this.x = position[0];
+			this.y = position[1];
 		};
 	} else if (allowedKeys == 'down') {
 		if (this.y < 400) {
